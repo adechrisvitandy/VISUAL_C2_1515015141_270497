@@ -42,7 +42,6 @@ public class tpsv1 extends javax.swing.JFrame {
         cbc = new javax.swing.JCheckBox();
         cbd = new javax.swing.JCheckBox();
         cbe = new javax.swing.JCheckBox();
-        bsimpan = new usu.widget.Button();
         tfnama = new javax.swing.JTextField();
         tfnim = new javax.swing.JTextField();
         rbilkom = new javax.swing.JRadioButton();
@@ -50,6 +49,7 @@ public class tpsv1 extends javax.swing.JFrame {
         cbjl = new javax.swing.JComboBox<>();
         RESET = new javax.swing.JButton();
         EXIT = new javax.swing.JButton();
+        bsimpan = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -91,18 +91,6 @@ public class tpsv1 extends javax.swing.JFrame {
         grupkelas.add(cbe);
         cbe.setText("E2015");
 
-        bsimpan.setText("SIMPAN");
-        bsimpan.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                bsimpanMouseClicked(evt);
-            }
-        });
-        bsimpan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bsimpanActionPerformed(evt);
-            }
-        });
-
         tfnama.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfnamaActionPerformed(evt);
@@ -135,6 +123,13 @@ public class tpsv1 extends javax.swing.JFrame {
             }
         });
 
+        bsimpan.setText("SIMPAN");
+        bsimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bsimpanActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelbiasaLayout = new javax.swing.GroupLayout(panelbiasa);
         panelbiasa.setLayout(panelbiasaLayout);
         panelbiasaLayout.setHorizontalGroup(
@@ -160,27 +155,28 @@ public class tpsv1 extends javax.swing.JFrame {
                             .addComponent(cbjl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(panelbiasaLayout.createSequentialGroup()
-                .addGroup(panelbiasaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelbiasaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(panelbiasaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelbiasaLayout.createSequentialGroup()
+                            .addGap(123, 123, 123)
+                            .addComponent(jurusan))
+                        .addGroup(panelbiasaLayout.createSequentialGroup()
+                            .addGap(130, 130, 130)
+                            .addComponent(kelas))
+                        .addGroup(panelbiasaLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(cba)
+                            .addGap(18, 18, 18)
+                            .addComponent(cbb)
+                            .addGap(18, 18, 18)
+                            .addComponent(cbc)
+                            .addGap(29, 29, 29)
+                            .addComponent(cbd)
+                            .addGap(18, 18, 18)
+                            .addComponent(cbe)))
                     .addGroup(panelbiasaLayout.createSequentialGroup()
-                        .addGap(123, 123, 123)
-                        .addComponent(jurusan))
-                    .addGroup(panelbiasaLayout.createSequentialGroup()
-                        .addGap(130, 130, 130)
-                        .addComponent(kelas))
-                    .addGroup(panelbiasaLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(cba)
-                        .addGap(18, 18, 18)
-                        .addComponent(cbb)
-                        .addGap(18, 18, 18)
-                        .addComponent(cbc)
-                        .addGap(29, 29, 29)
-                        .addComponent(cbd)
-                        .addGap(18, 18, 18)
-                        .addComponent(cbe))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelbiasaLayout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(bsimpan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(bsimpan)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(RESET)
                         .addGap(42, 42, 42)
@@ -224,9 +220,9 @@ public class tpsv1 extends javax.swing.JFrame {
                     .addComponent(cbe))
                 .addGap(38, 38, 38)
                 .addGroup(panelbiasaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bsimpan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(RESET)
-                    .addComponent(EXIT))
+                    .addComponent(EXIT)
+                    .addComponent(bsimpan))
                 .addContainerGap(41, Short.MAX_VALUE))
         );
 
@@ -262,6 +258,23 @@ tfnim.setText("");
 
     }//GEN-LAST:event_formWindowOpened
 
+    
+    
+    private void RESETActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RESETActionPerformed
+        // TODO add your handling code here:
+        tfnama.setText("");
+        tfnim.setText("");
+        cbjl.setSelectedIndex(0);
+        grupjurusan.clearSelection();
+        grupkelas.clearSelection();
+        
+        
+    }//GEN-LAST:event_RESETActionPerformed
+
+    private void EXITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EXITActionPerformed
+System.exit(0);        // TODO add your handling code here:
+    }//GEN-LAST:event_EXITActionPerformed
+
     private void bsimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bsimpanActionPerformed
 String jenkel =(String)cbjl.getSelectedItem();
 String jurusan="";
@@ -285,32 +298,8 @@ if(cba.isSelected()) {
     }
 String nama = tfnama.getText();
 String nim =tfnim.getText();
-JOptionPane.showMessageDialog(this,nama+"\n"+nim+"\n"+jenkel+"\n"+jurusan+"\n"+kelas);
-        
-        
+JOptionPane.showMessageDialog(this,nama+"\n"+nim+"\n"+jenkel+"\n"+jurusan+"\n"+kelas);        // TODO add your handling code here:
     }//GEN-LAST:event_bsimpanActionPerformed
-
-    
-    
-    private void bsimpanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bsimpanMouseClicked
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bsimpanMouseClicked
-
-    private void RESETActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RESETActionPerformed
-        // TODO add your handling code here:
-        tfnama.setText("");
-        tfnim.setText("");
-        cbjl.setSelectedIndex(0);
-        grupjurusan.clearSelection();
-        grupkelas.clearSelection();
-        
-        
-    }//GEN-LAST:event_RESETActionPerformed
-
-    private void EXITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EXITActionPerformed
-System.exit(0);        // TODO add your handling code here:
-    }//GEN-LAST:event_EXITActionPerformed
 
     /**
      * @param args the command line arguments
@@ -350,7 +339,7 @@ System.exit(0);        // TODO add your handling code here:
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton EXIT;
     private javax.swing.JButton RESET;
-    private usu.widget.Button bsimpan;
+    private javax.swing.JButton bsimpan;
     private javax.swing.JCheckBox cba;
     private javax.swing.JCheckBox cbb;
     private javax.swing.JCheckBox cbc;

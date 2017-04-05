@@ -176,7 +176,7 @@ private DefaultTableModel model;
         );
 
         jPanel4.setBackground(new java.awt.Color(0, 255, 204));
-        jPanel4.setLayout(new java.awt.GridLayout());
+        jPanel4.setLayout(new java.awt.GridLayout(1, 0));
 
         btambah.setText("Tambah");
         btambah.addActionListener(new java.awt.event.ActionListener() {
@@ -309,7 +309,7 @@ private DefaultTableModel model;
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addGap(32, 32, 32)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)

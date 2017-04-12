@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tugas6;
+package tugas7;
 
 /**
  *
@@ -25,9 +25,10 @@ private ResultSet rss;
     public FormDataBuku() {
         initComponents();
     }
-    public void InitTable(){//method untuk menampilkan table
+    public void InitTable(){//method untuk menampilkan table 
  model = new DefaultTableModel(); //membuat object table baru
- model.addColumn("Judul"); //menginisiasi atau menentukan colum di object table dengan nama Judul
+ model.addColumn("Id buku");//menginisiasi atau menentukan colum di object table dengan nama id buku
+ model.addColumn("Judul");//menginisiasi atau menentukan colum di object table dengan nama Judul
  model.addColumn("Penulis");//menginisiasi atau menentukan colum di object table dengan nama penulis
   model.addColumn("Harga");//menginisiasi atau menentukan colum di object table dengan nama Harga
  jTable1.setModel(model);////menginisiasi atau menentukan bahwa model jtable1 adalah model object yang telah kita buat di atas
@@ -39,10 +40,11 @@ public void TampilData(){//method untuk memanggil data
         stt = con.createStatement();//untuk membuat statment mengambil koneksi
         rss = stt.executeQuery(sql);//menjalankan atau mengeksekusi query sql yg telah di buat dengan nama sql
         while(rss.next()){//membuat perulangan untuk menambah data
-        Object[] o = new Object[3];//membuat object dari object array yang benama o
-        o[0] = rss.getString("judul"); //isi array pertama
-        o[1] = rss.getString("penulis");//ii array ke dua
-        o[2] = rss.getInt("harga");//isi array ketiga
+        Object[] o = new Object[4];//membuat object dari object array yang benama o
+        o[0] = rss.getString("id");
+        o[1] = rss.getString("judul"); //isi array 2
+        o[2] = rss.getString("penulis");//ii array ke 3
+        o[3] = rss.getInt("harga");//isi array 4
         model.addRow(o);//fungsi untuk menambahkan row kedalam model jtable
         };
     } catch (SQLException e) {//exception untuk mengatasi error sql
@@ -64,76 +66,77 @@ public void TambahData(String judul,String Penulis,String Harga){//method untuk 
 
 
 };
-/*method validasi*/
-//public boolean Cekajasih(String judul){
-  //  try {
-    //    String sql = "select * from buku where judul='"+judul+"'";
-      //  stt = con.createStatement();
-        //rss = stt.executeQuery(sql);
-        //if(rss.next())
-        //return true;
-        //else;['ppppppppppppppppppppppppppppp
-        //return false;
-    //} catch (SQLException e) {
-      //  System.out.println(e.getMessage());
-        //return false;
-   // }
-    //};
 
-//ngak harus jadi disimpan saja
-/* public void updatedata(String judul, String penulis, String harga){
-try {
-            String sql = "update buku set judul='"+judul+"',penulis='"+penulis+"',harga="+harga+" where judul='"+txjudul.getText()+"'";
-            stt = con.createStatement();
-            stt.executeUpdate(sql);
-            
-            txjudul.setText("");
-            cpenulis.setSelectedIndex(0);
-            txharga.setText("");
-            
-            
-        } catch (SQLException ex) {
-             System.out.println(ex.getMessage());
-        }
-  
-
-}; */
-
-//ngak harus juga 
- /*private void HapusData(String judul){
-        try {
-            String sql="delete from buku where judul='"+judul+"'";
-            stt = con.createStatement();
-            stt.executeUpdate(sql);
-            txjudul.setText("");
-            cpenulis.setSelectedItem(0);
-            txharga.setText("");
-            
-            
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }*/
-public void ayokitacari(){//method pemcarian
-    InitTable();
+public boolean Cekajasih(String judul,String penulis){//method untuk validas
     try {//try jika terjadi error
-        String sql = " select judul,penulis,harga from buku where "
-        +jComboBox1.getSelectedItem().toString()+" like '%"+
-                jTextField1.getText()+"%'"; //menginisiasi atau menentukan query sql untuk mecari 
+        String sql = "select * from buku where judul='"+judul+"' and penulis='"+penulis+"';";//menginisiasi atau menentukan query sql untuk memilih data judul dan penulis
         stt = con.createStatement();//untuk membuat statment mengambil koneksi
-        rss = stt.executeQuery(sql); //mengeksekusi dan mengupdtae  query sql yg telah di buat dengan nama sql
-        while(rss.next()){//perulangan rss dengan fungsi next
-            model.addRow(new Object[]{//untuk mrmbuat tabel nempikan hasil cari
-rss.getString(1),//hasil cari judul
-rss.getString(2),//hasil cari penulis
-rss.getString(3)//hasil cari harga
-});
-
-jTable1.setModel(model);//untuk menampilkan jtable dengan isi pencarian atau model yg telah berisi nilai yg dicari
-        }
-    } catch (SQLException e) {//untuk mengatasi jika error
-        System.out.println(e.getMessage());//untuk menampilkan error
+        rss = stt.executeQuery(sql);//menjalankan atau mengeksekusi query sql yg telah di buat dengan nama sql
+        if(rss.next())//jika nilai rss.next benar makan mengembalikan nilai true
+        return true;//pemngembalin nilai true
+        else//fungsi selainya 
+        return false;//pengembalian nilai false
+    } catch (SQLException e) {//exception untuk mengatasi error sql
+        System.out.println(e.getMessage());//untuk menapilkan error 
+        return false;//mengembalikan nilai false
     }
+    
+
+
+
+};
+
+public void ayokitacari( String by,String cari){//method pencarian
+InitTable();//inisiasi table
+    try {//try jika terjadi error
+        String sql = " select * from buku where "
+        +by+" like '%"+cari+"%';";//menginisiasi atau menentukan query sql untuk mecari
+        stt = con.createStatement();//untuk membuat statment mengambil koneksi
+        rss = stt.executeQuery(sql);//mengeksekus  query sql yg telah di buat dengan nama sql
+        while(rss.next()){//perulangan rss dengan fungsi next
+            Object[] data = new Object[4];//membuat object dari object array yang benama data
+            data[0] = rss.getString("id");//nilai dari data 0 adalah nilai dari id
+            data[1] = rss.getString("judul");//nilai dari data 0 adalah nilai dari judul
+            data[2] = rss.getString("penulis");//nilai dari data 0 adalah nilai dari penulis
+            data[3] = rss.getInt("harga");//nilai dari data 0 adalah nilai dari harga
+            model.addRow(data);//fungsi menambhkan data di atas ke dalam model
+                    
+            
+        
+     
+        }
+    } catch (Exception e) {//exception untuk mengatasi error
+        System.out.println(e.getMessage());//untuk menapilkan error 
+    }
+
+}
+public boolean Ubahdong(String id,String judul,String penulis,String harga){//method untuk mengubah data
+    try {//try jika terjadi error
+        
+        String sql = " Update buku set judul='"+judul+"',penulis='"+penulis+"',harga="+
+                harga+" where id="+id+";";//menginisiasi atau menentukan query sql untuk mengubah data judul ,penulis dan harga
+        stt = con.createStatement();//untuk membuat statment mengambil koneksi
+        stt.executeUpdate(sql);//mengeksekus  query sql yg telah di buat dengan nama sql
+        return true;//untuk mengembalikan nilai true
+    } catch (Exception e) {//exception untuk mengatasi error
+        System.out.println(e.getMessage());//untuk menapilkan error 
+        return false;//untuk mengembalikan nilai false
+    }
+
+
+}
+public boolean hapusindong(String id){//method untuk  menghapus data 
+    try {//try untuk mengatasi error
+        
+        String sql = " delete from buku where id='"+id+"'";//menginisiasi atau menentukan query sql untuk menghapus data dengan merujuk id
+         stt = con.createStatement();//untuk membuat statment mengambil koneksi
+        stt.executeUpdate(sql);//mengeksekus  query sql yg telah di buat dengan nama sql
+        return true;//untuk mengembalikan nilai true
+    } catch (Exception e) {//exception untuk mengatasi error
+        System.out.println(e.getMessage());//untuk menapilkan error 
+        return false;//untuk mengembalikan nilai false
+    }
+
 
 }
 
@@ -149,10 +152,10 @@ jTable1.setModel(model);//untuk menampilkan jtable dengan isi pencarian atau mod
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        bsimpan = new javax.swing.JButton();
+        bubah = new javax.swing.JButton();
+        bhapus = new javax.swing.JButton();
+        bexit = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
@@ -169,49 +172,61 @@ jTable1.setModel(model);//untuk menampilkan jtable dengan isi pencarian atau mod
         jLabel5 = new javax.swing.JLabel();
         txharga = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 formComponentShown(evt);
             }
         });
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 0));
+        jPanel1.setBackground(new java.awt.Color(255, 51, 51));
 
         jPanel2.setBackground(new java.awt.Color(0, 0, 0));
         jPanel2.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
-        jButton1.setText("Simpan");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        bsimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Floppy_disks-512.png"))); // NOI18N
+        bsimpan.setText("Simpan");
+        bsimpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                bsimpanActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1);
+        jPanel2.add(bsimpan);
 
-        jButton2.setText("Ubah");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        bubah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/document-edit-iconx.png"))); // NOI18N
+        bubah.setText("Ubah");
+        bubah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                bubahActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton2);
+        jPanel2.add(bubah);
 
-        jButton3.setText("Hapus");
-        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton3MouseClicked(evt);
-            }
-        });
-        jPanel2.add(jButton3);
-
-        jButton4.setText("Keluar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        bhapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Flat_Icon_-_Trash-5z12.png"))); // NOI18N
+        bhapus.setText("Hapus");
+        bhapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                bhapusActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton4);
+        jPanel2.add(bhapus);
+
+        bexit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/close_redl.png"))); // NOI18N
+        bexit.setText("Keluar");
+        bexit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bexitActionPerformed(evt);
+            }
+        });
+        jPanel2.add(bexit);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -225,16 +240,16 @@ jTable1.setModel(model);//untuk menampilkan jtable dengan isi pencarian atau mod
                 "Title 1", "Title 2", "Title 3"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jPanel3.setBackground(new java.awt.Color(0, 0, 0));
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
-        jTextField1.addCaretListener(new javax.swing.event.CaretListener() {
-            public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                jTextField1CaretUpdate(evt);
-            }
-        });
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -285,7 +300,7 @@ jTable1.setModel(model);//untuk menampilkan jtable dengan isi pencarian atau mod
         jPanel4.setBackground(new java.awt.Color(0, 0, 0));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Form Data Buku", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 0));
+        jPanel5.setBackground(new java.awt.Color(255, 51, 51));
 
         jLabel3.setText("Judul");
 
@@ -397,49 +412,93 @@ jTable1.setModel(model);//untuk menampilkan jtable dengan isi pencarian atau mod
         TampilData();//memanggil method tampildata
     }//GEN-LAST:event_formComponentShown
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void bsimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bsimpanActionPerformed
         // TODO add your handling code here:
         String judul = txjudul.getText(); //fungsi unutk mengambil judul
         String Penulis = cpenulis.getSelectedItem().toString(); //fungsi untuk mengambil penulis
         //Cekajasih(judul);
         String Harga = txharga.getText();//fungsi untuk mengambil harga
+        if(Cekajasih(judul, Penulis)){
+         JOptionPane.showMessageDialog(null ,"Data yg dimasukan sudah ada");
+        }
+        else{
         TambahData(judul, Penulis, Harga);//memanggil method tambah data agar data dpt ditambahkan ke database 
         InitTable();//memanggil method imittable
         TampilData();//memanggil method tampildata
-    }//GEN-LAST:event_jButton1ActionPerformed
+        }
+    }//GEN-LAST:event_bsimpanActionPerformed
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
         // TODO add your handling code here:
        // if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-       // ayokitacari();//memanggil method pencarian
+       InitTable();//untuk meinisiasi table
+       if(jTextField1.getText().length()==0){//funsi jika untuk pencarian kosong
+       TampilData();//untuk menapilkan data
+       }else{
+           ayokitacari(jComboBox1.getSelectedItem().toString(), jTextField1.getText());//method pencarian dengan niali dari jcombobox1 dan jtextfield1
+       }
+        //ayokitacari();
         //}
     }//GEN-LAST:event_jTextField1KeyPressed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void bubahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bubahActionPerformed
         // TODO add your handling code here:
- 
-      
-    }//GEN-LAST:event_jButton2ActionPerformed
+       int baris=jTable1.getSelectedRow();//menginisiasi baris sebagai fungsi getselected row
+       String id = jTable1.getValueAt(baris, 0).toString();// meninisiasi id adalh pengambilan nilai dari baris yg rownya 0
+       String judul = txjudul.getText();// meninisiasi judul dengan megambil nilai dari txjudul
+       String penulis = cpenulis.getSelectedItem().toString(); //menginisiasi penulis dengan mengambil nilai dari cpenulis
+       String harga =  txharga.getText();//menginisiasi harga dengan mengambil nilai dari txharga
+       if(Cekajasih(judul, penulis)){//fungsi jika cekajaasih berisi judul dan penulis yg sama maka akan muncul panel 
+         JOptionPane.showMessageDialog(null ,"Data sudah ada");//fungsi panel untuk menapilakan data yang anda masukan sudah ada
+        }
+        else{//jika tidak ada data yang sama akan melanjutkan fungsi dibawah
+             if(
+               Ubahdong(id, judul, penulis, harga)   ){//funsgi jika untuk merubah data
+       JOptionPane.showMessageDialog(null ,"BERHASIL bro");}//panel menapilkan pesan berhasil
+       else{
+       JOptionPane.showMessageDialog(null ,"GAGAL UBAH Bro");//panel menapilkan pesan gagal
+       }    
+           }
+      InitTable();TampilData();//menginisiasi tabel dan menapilakan data
+    }//GEN-LAST:event_bubahActionPerformed
 
-    private void jTextField1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextField1CaretUpdate
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
-         ayokitacari();//memanggil method pencarian
-    }//GEN-LAST:event_jTextField1CaretUpdate
+        int baris=jTable1.getSelectedRow();//fungsi agar table dapat dipilih
+        txjudul.setText(jTable1.getValueAt(baris,1).toString());//membuat txjudul bernilai sama dengan baris 1
+        cpenulis.setSelectedItem(jTable1.getValueAt(baris, 2).toString());//membuat cpenulsi bernilai sama dengan baris 2
+        txharga.setText(jTable1.getValueAt(baris, 3).toString());//membuat txharag bernilai sama dengan baris 3
+        
+    }//GEN-LAST:event_jTable1MouseClicked
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void bhapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bhapusActionPerformed
+        // TODO add your handling code here:
+        int baris=jTable1.getSelectedRow();//fungsi agar table dapat dipilih
+         String id = jTable1.getValueAt(baris, 0).toString();//menginisiasi id bernilai baris 0
+         if(hapusindong(id)){//fungsi mnghapus
+             JOptionPane.showMessageDialog(null ,"BERHASIL HAPUS BOY");}//panel menapilkan pesan berhasil//panel menapilkan pesan berhasil
+         else{
+       JOptionPane.showMessageDialog(null ,"GAGAL HAPUS BOY");}//panel menapilkan pesan gagal    
+      InitTable();TampilData();//menginisiasi tabel dan menapilakan data
+    }//GEN-LAST:event_bhapusActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_formWindowClosed
+
+    private void bexitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bexitActionPerformed
         // TODO add your handling code here:
         int pilihan = JOptionPane.showConfirmDialog(this,"Betulan mau keluar?","Keluar???",JOptionPane.YES_NO_OPTION);//untuk menapilkan pilihan keluar atau tidak
         if (pilihan==0) { //jika pilihan ya maka keluar
             System.exit(0); //fungsi exit
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_bexitActionPerformed
 
-    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        
-        
-        
-    }//GEN-LAST:event_jButton3MouseClicked
+        JOptionPane.showMessageDialog(null ,"Silahkan keluar lewat tombol keluar");//event peringatan untuk hanya keluar lewat tombol keluar
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -467,6 +526,7 @@ jTable1.setModel(model);//untuk menampilkan jtable dengan isi pencarian atau mod
             java.util.logging.Logger.getLogger(FormDataBuku.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -477,11 +537,11 @@ jTable1.setModel(model);//untuk menampilkan jtable dengan isi pencarian atau mod
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bexit;
+    private javax.swing.JButton bhapus;
+    private javax.swing.JButton bsimpan;
+    private javax.swing.JButton bubah;
     private javax.swing.JComboBox<String> cpenulis;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
